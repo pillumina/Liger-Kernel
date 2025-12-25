@@ -25,3 +25,6 @@ uv.lock
 benchmark/visualizations
 .vscode/
 .coverage
+
+# docs
+docs/npu_development/

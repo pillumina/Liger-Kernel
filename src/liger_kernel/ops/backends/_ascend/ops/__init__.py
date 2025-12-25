@@ -13,3 +13,7 @@ To add a new operator:
 
 If __all__ is not defined, all public symbols will be auto-discovered.
 """
+
+from .layer_norm import LigerLayerNormFunction, layer_norm_forward, layer_norm_backward
+
+__all__ = ["LigerLayerNormFunction", "layer_norm_forward", "layer_norm_backward"]
