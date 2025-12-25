@@ -112,8 +112,10 @@ def _replace_with_vendor_ops():
 
     device = infer_device()
 
+    print(f"[DEBUG] device: {device}", flush=True)
     # Look up vendor info for this device
     vendor_info = get_vendor_for_device(device)
+    print(f"[DEBUG] vendor_info: {vendor_info}", flush=True)
     if vendor_info is None:
         return
 
@@ -129,12 +131,15 @@ def _replace_with_vendor_ops():
             # Auto-discover: find all public symbols (classes and functions)
             names_to_export = [name for name in dir(vendor_ops) if not name.startswith("_")]
 
+        print(f"[DBEUG] names_to_export: {names_to_export}", flush=True)
+
         # Replace or add to this module's globals
         for name in names_to_export:
             globals()[name] = getattr(vendor_ops, name)
 
-    except ImportError:
+    except ImportError as e:
         # Vendor module not available, use default implementations
+        print(f"[DEBUG] import error: {e}", flush=True)
         pass
 
 

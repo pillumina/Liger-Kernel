@@ -406,6 +406,7 @@ class LigerLayerNormFunction(torch.autograd.Function):
     @staticmethod
     @ensure_contiguous
     def forward(ctx, X, W, B, eps):
+        print(f"Executing NPU layernorm forward")
         Y, X, Mean, RSTD, XBLOCK = layer_norm_forward(X, W, B, eps)
         ctx.save_for_backward(X, W, B, Mean, RSTD)
         return Y
@@ -413,6 +414,7 @@ class LigerLayerNormFunction(torch.autograd.Function):
     @staticmethod
     @ensure_contiguous
     def backward(ctx, dY):
+        print(f"Executing NPU layernorm backward")
         X, W, B, Mean, RSTD = ctx.saved_tensors
         DX, DW, DB = layer_norm_backward(dY, X, W, B, Mean, RSTD)
         return DX, DW, DB, None
